@@ -1,3 +1,3 @@
 #!/bin/bash
-# send a post request with custome data
-curl -s "$1" -X POST -d "email=hr@holbertonschool.com&subject=I will always be here for PLD"
+#Bash script that takes in a URL and sends a POST request to the URL
+curl -sL -X POST -d "email=hr@holbertonschool.com" -d "subject=I will always be here for PLD" "$1"

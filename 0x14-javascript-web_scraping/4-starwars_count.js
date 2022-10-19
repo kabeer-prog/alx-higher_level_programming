@@ -2,16 +2,23 @@
 
 const request = require('request');
 const url = process.argv[2];
-request.get(url, function (err, response, body) {
-  let count = 0;
+
+request(url, function (err, response, body) {
   if (err) {
     console.log(err);
-  }
-  const data = JSON.parse(body);
-  for (let i = 0; data.results[i] !== undefined; i++) {
-    if (data.results[i].characters.includes('https://swapi-api.hbtn.io/api/people/18/')) {
-      count++;
+  } else if (response.statusCode === 200) {
+    const films = JSON.parse(body).results;
+    let count = 0;
+    for (const filmIndex in films) {
+      const filmChars = films[filmIndex].characters;
+      for (const charIndex in filmChars) {
+        if (filmChars[charIndex].includes('18')) {
+          count++;
+        }
+      }
     }
+    console.log(count);
+  } else {
+    console.log('An error occured. Status code: ' + response.statusCode);
   }
-  console.log(count);
 });
